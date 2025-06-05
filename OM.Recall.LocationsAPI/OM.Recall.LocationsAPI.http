@@ -1,0 +1,6 @@
+@OM.Recall.LocationsAPI_HostAddress = http://localhost:5175
+
+GET {{OM.Recall.LocationsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

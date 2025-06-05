@@ -1,0 +1,67 @@
+﻿🚀 Quick Setup
+
+Entity Framework Core with SQL Server
+Swagger UI for testing (available at root URL)
+Bulk insert capabilities for your JSON data
+CRUD operations for individual locations
+
+📊 Database Design
+
+Locations table with proper indexing
+Unique constraint on Identifier to prevent duplicates
+Audit fields (CreatedDate, UpdatedDate)
+
+
+1. Database Migration
+bash# Add migration
+dotnet ef migrations add InitialCreate
+
+# Update database
+dotnet ef database update
+2. Usage Examples
+Insert Your JSON Data
+bash# Using curl to insert your location data
+curl -X POST "https://localhost:7000/api/locations/bulk/json" \
+  -H "Content-Type: application/json" \
+  -d '[
+    {
+      "description": "St Louis",
+      "identifier": "14",
+      "systemTypeName": "CSW"
+    },
+    {
+      "description": "Seattle",
+      "identifier": "92",
+      "systemTypeName": "CSW"
+    }
+  ]'
+Get All Locations
+bashcurl -X GET "https://localhost:7000/api/locations"
+Get Location by ID
+bashcurl -X GET "https://localhost:7000/api/locations/1"
+Upload JSON File
+Use Swagger UI or Postman to upload your JSON file to /api/locations/upload
+10. Running the Application
+bash# Build the project
+dotnet build
+
+# Run the application
+dotnet run
+
+# The API will be available at:
+# - HTTPS: https://localhost:7000
+# - HTTP: http://localhost:5000
+# - Swagger UI: https://localhost:7000 (root page)
+API Endpoints Summary
+
+GET /api/locations - Get all locations
+GET /api/locations/{id} - Get location by ID
+GET /api/locations/identifier/{identifier} - Get location by identifier
+POST /api/locations - Create single location
+PUT /api/locations/{id} - Update location
+DELETE /api/locations/{id} - Delete location
+POST /api/locations/bulk - Bulk insert locations
+POST /api/locations/bulk/json - Bulk insert from JSON string
+POST /api/locations/upload - Upload JSON file
+
+This API provides comprehensive functionality for managing your location data with proper error handling, logging, validation, and documentation.
