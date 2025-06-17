@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build, Scan and Email Report
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-scan:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,9 +27,29 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t recallapp:latest .
-         # docker scout cves recallapp:latest --output json > svest.json  
 
-      - name: Tag and push Docker image
-        run: |
-          docker tag recallapp:latest ${{ secrets.DOCKER_USERNAME }}/recallapp:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/recallapp:latest
+      - name: Run Docker Scout and output SARIF
+        uses: docker/scout-action@v1
+        with:
+          image: recallapp:latest
+          format: sarif
+          output: scout-report.sarif
+
+      - name: Send vulnerability report via email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Docker Scout CVE Report for recallapp
+          to: ${{ secrets.REPORT_RECIPIENT }}
+          from: ${{ secrets.SMTP_USERNAME }}
+          body: |
+            Hello,
+
+            Please find attached the latest Docker Scout CVE scan report for the image `recallapp:latest`.
+
+            Regards,
+            GitHub Actions
+          attachments: scout-report.sarif
