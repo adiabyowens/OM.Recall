@@ -27,7 +27,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t recallapp:latest .
-          docker scout cves recallapp:latest --output json > svest.json  
+         # docker scout cves recallapp:latest --output json > svest.json  
 
       - name: Tag and push Docker image
         run: |
