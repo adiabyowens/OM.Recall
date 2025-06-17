@@ -39,7 +39,20 @@ jobs:
         run: |
             ls -al
             cat scout-report.sarif
+      - name: Check for vulnerabilities
+        run: |
+          if grep -q '"level": "error"' scout-report.sarif; then
+            echo "Vulnerabilities found in the Docker image."
+            exit 1
+          else
+            echo "No vulnerabilities found."
+          fi
 
+
+      - name: Upload SARIF report to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+              sarif_file: scout-report.sarif
       - name: Send vulnerability report via email
         uses: dawidd6/action-send-mail@v3
         with:
