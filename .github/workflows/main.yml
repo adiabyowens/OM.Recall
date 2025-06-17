@@ -31,6 +31,7 @@ jobs:
       - name: Run Docker Scout and output SARIF
         uses: docker/scout-action@v1
         with:
+          command: cves
           image: recallapp:latest
           format: sarif
           output: scout-report.sarif
