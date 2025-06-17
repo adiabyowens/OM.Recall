@@ -35,6 +35,10 @@ jobs:
           image: recallapp:latest
           format: sarif
           output: scout-report.sarif
+      - name: Verify file exists
+        run: |
+            ls -al
+            cat scout-report.sarif
 
       - name: Send vulnerability report via email
         uses: dawidd6/action-send-mail@v3
