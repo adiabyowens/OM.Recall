@@ -28,13 +28,16 @@ jobs:
         run: |
           docker build -t recallapp:latest .
 
-      - name: Run Docker Scout and output SARIF
-        uses: docker/scout-action@v1
-        with:
-          command: cves
-          image: recallapp:latest
-          format: sarif
-          output: scout-report.sarif
+      - name: Run Docker Scout and output SARIF   
+        run: |
+          docker scout cves recall:latest --output ./scout-report.sarif
+  
+        # uses: docker/scout-action@v1
+        # with:
+        #   command: cves
+        #   image: recallapp:latest
+        #   format: sarif
+        #   output: scout-report.sarif
       - name: Verify file exists
         run: |
             ls -al
