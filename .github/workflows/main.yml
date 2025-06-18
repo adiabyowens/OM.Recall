@@ -30,7 +30,7 @@ jobs:
 
       -  name: Run Docker Scout CVE Scan
          run: |
-              docker scout cves --format sarif --output ./scout-report.sarif
+              docker scout cves --output ./scout-report.sarif
 
   
         # uses: docker/scout-action@v1
