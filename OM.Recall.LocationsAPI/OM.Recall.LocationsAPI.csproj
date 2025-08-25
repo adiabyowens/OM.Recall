@@ -6,8 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
-
+  <ItemGroup>
+    <None Include="..\OM.Recall.LocationsAPI\bin\$(Configuration)\$(TargetFramework)\*.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
